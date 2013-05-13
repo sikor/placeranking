@@ -1,0 +1,11 @@
+#form{
+
+    float:left;
+}
+#map{
+    height: 300px;
+    width: 400px;
+}
+#opinions{
+    clear: both;
+}
