@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Summary </title>
+</head>
+<body>
+<h2>Summary</h2>
+<a href="/">Wróć do opini</a>
+<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script type='text/javascript'>
+    google.load('visualization', '1', {'packages': ['geochart']})
+    google.setOnLoadCallback(drawRegionsMap)
+
+    function drawRegionsMap() {
+        var dataArray = [ ]
+        dataArray.push(['Country', 'Sentiment'])
+        var countryOptions = {
+            region: 'PL',
+            displayMode: 'regions',
+            resolution: 'provinces'
+        };
+
+        var earthOptions = {}
+
+
+        $.ajax({
+            url: "/rest/summary",
+            cache: true,
+            dataType: "json"
+        }).done(function (jsonSummary) {
+                    $.each(jsonSummary, function (index, country) {
+                        var countryName = country.areaName
+                        var opinions = parseInt(country.countPos) + parseInt(country.countNeg)
+                        dataArray.push([countryName, opinions])
+                    })
+                    var data = google.visualization.arrayToDataTable(dataArray)
+                    var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+                    chart.draw(data, earthOptions);
+                }
+        );
+
+
+
+
+
+    };
+</script>
+</body>
+
+</html>

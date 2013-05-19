@@ -25,8 +25,14 @@ class MyHandler(webapp.RequestHandler):
         self.redirect('/home')
 
 
+class Summary(webapp.RequestHandler):
+    def get(self):
+        self.response.headers.add_header("Cache-Control", "no-store")
+        self.response.out.write(unicode(template.render('templates/summary.html', {})))
+
+
 def main():
-    app = webapp.WSGIApplication([(r'.*', MyHandler)], debug=True)
+    app = webapp.WSGIApplication([('/summary', Summary), (r'.*', MyHandler)], debug=True)
     wsgiref.handlers.CGIHandler().run(app)
 
 if __name__ == "__main__":

@@ -27,13 +27,17 @@
 
 </form>
 <div id="map"></div>
+<a href="/summary">Zobacz podsumowanie</a>
 <div id="opinions">
     {% for opinion in opinions %}
     <div>
         <p>{{ opinion.comment }}</p>
 
         <p>
-            {{ opinion.location }},
+            {{ opinion.continent }},
+            {{ opinion.country }},
+            {{ opinion.region }},
+            {{ opinion.city }},
             {% if opinion.isPositive %} Positive {% else %} Negative {% endif %},
             {{ opinion.when }}
         </p>

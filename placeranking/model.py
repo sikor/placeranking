@@ -14,3 +14,14 @@ class Opinion(DictModel):
     isPositive = db.BooleanProperty(required=True)
     location = db.GeoPtProperty(required=True)
     when = db.DateTimeProperty(auto_now_add=True)
+    continent = db.StringProperty()
+    country = db.StringProperty()
+    region = db.StringProperty()
+    city = db.StringProperty()
+
+
+class Counter(DictModel):
+    parentKey = db.StringProperty(required=True)
+    areaName = db.StringProperty(required=True)
+    countPos = db.IntegerProperty(required=True, default=0)
+    countNeg = db.IntegerProperty(required=True, default=0)

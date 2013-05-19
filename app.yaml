@@ -8,7 +8,10 @@ handlers:
 - url: /rest/opinion
   script: placeranking/opinion.py
 
-- url: /(opinion|home|$)
+- url: /rest/summary
+  script: placeranking/summary.py
+
+- url: /(opinion|home|summary|$)
   script: placeranking/main_webapp.py
 
 - url: /css
