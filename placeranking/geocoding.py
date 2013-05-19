@@ -51,7 +51,7 @@ class Geocoder:
         city = infoMap[self.CITY]
         region = countryShort+'-'+self.getRegionIsoCode(lat, lon)
         continent = self.getContinentForCountry(countryShort)
-        logging.error(str(continent) + ', ' + str(country) + ', ' + str(region) + ', ' + str(city))
+        logging.error(unicode(continent) + ', ' + unicode(country) + ', ' + unicode(region) + ', ' + unicode(city))
         return DetailedPosition(continent, country, region, city)
 
     def getContinentForCountry(self, country):
