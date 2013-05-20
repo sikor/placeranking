@@ -23,7 +23,9 @@
             resolution: 'provinces'
         };
 
-        var earthOptions = {}
+        var earthOptions = {
+            colorAxis: {minvalue: -10, colors: ['red', 'green']}
+        }
 
 
         $.ajax({
@@ -33,7 +35,7 @@
         }).done(function (jsonSummary) {
                     $.each(jsonSummary, function (index, country) {
                         var countryName = country.areaName
-                        var opinions = parseInt(country.countPos) + parseInt(country.countNeg)
+                        var opinions = parseInt(country.countPos) - parseInt(country.countNeg)
                         dataArray.push([countryName, opinions])
                     })
                     var data = google.visualization.arrayToDataTable(dataArray)

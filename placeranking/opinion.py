@@ -39,10 +39,11 @@ class OpinionHandler(webapp.RequestHandler):
                 continue
             counter = Counter.all()
             key = getattr(details, prop)
+            if not key:
+                continue
             counter.filter("areaName =", key)
             entity = counter.get()
             parentProp = parentPropOf[prop]
-
             if entity is None:
                 parentKey = getattr(details, str(parentProp), 'root')
                 entity = Counter(areaName=key, parentKey=parentKey)

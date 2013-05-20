@@ -27,6 +27,8 @@ class Geocoder:
               + '&maxRows=1' \
               + '&username=placeranking'
         ans = json.load(urllib2.urlopen(url))
+        if not 'codes' in ans:
+            return None
         codes = ans['codes']
         codesMap = dict([(x['type'], x['code']) for x in codes])
         if not 'ISO3166-2' in codesMap:
@@ -38,8 +40,8 @@ class Geocoder:
         ans = json.load(urllib2.urlopen(url))
         closest = ans['results'][0]['address_components']
         logging.error(closest[0][u'types'])
-        infoMap = dict([(x[u'types'][0], x[u'long_name']) for x in closest])
-        infoMapShort = dict([(x[u'types'][0], x[u'short_name']) for x in closest])
+        infoMap = dict([(x[u'types'][0], x[u'long_name']) for x in closest if 'types' in x and len(x['types']) > 0])
+        infoMapShort = dict([(x[u'types'][0], x[u'short_name']) for x in closest if 'types' in x and len(x['types']) > 0])
         keys = [self.COUNTRY, self.CITY, self.REGION]
         for key in keys:
             if not key in infoMap:
@@ -49,7 +51,11 @@ class Geocoder:
         country = infoMap[self.COUNTRY]
         countryShort = infoMapShort[self.COUNTRY]
         city = infoMap[self.CITY]
-        region = countryShort+'-'+self.getRegionIsoCode(lat, lon)
+        regionCode = self.getRegionIsoCode(lat, lon)
+        if regionCode:
+            region = countryShort+'-'+regionCode
+        else:
+            region = None
         continent = self.getContinentForCountry(countryShort)
         logging.error(unicode(continent) + ', ' + unicode(country) + ', ' + unicode(region) + ', ' + unicode(city))
         return DetailedPosition(continent, country, region, city)
