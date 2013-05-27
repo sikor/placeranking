@@ -4,7 +4,6 @@ from google.appengine.ext import db
 
 
 class DictModel(db.Model):
-
     def toDict(self):
         return dict([(p, unicode(getattr(self, p))) for p in self.properties()])
 
@@ -18,6 +17,8 @@ class Opinion(DictModel):
     country = db.StringProperty()
     region = db.StringProperty()
     city = db.StringProperty()
+    #category = db.ReferenceProperty(OurCategory)
+    category = db.StringListProperty()
 
 
 class Counter(DictModel):
@@ -25,3 +26,7 @@ class Counter(DictModel):
     areaName = db.StringProperty(required=True)
     countPos = db.IntegerProperty(required=True, default=0)
     countNeg = db.IntegerProperty(required=True, default=0)
+
+
+class OurCategory(DictModel):
+    categoryName = db.StringProperty(required=True)
