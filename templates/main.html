@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
 
@@ -11,17 +11,30 @@
     <link href="css/placeranking.css" rel="stylesheet">
 </head>
 <body>
-<h1>Make Opinion</h1>
+<h1>Express your opinion</h1>
 
 <form id="form" action="rest/opinion" method="post" accept-charset="utf-8">
     <p><textarea id="comment" name="comment" rows="5" cols="60"></textarea></p>
+    Category: <input list="categories" name="category">
+    <datalist id="categories">
+        <option value="Internet Explorer">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="Safari">
+            {% for category in categories %}
+                <option value="{{ category.categoryName }}">
+            {% endfor %}
 
-    <p><input type="radio" value="True" name="isPositive" checked="1" id="isPositive"/>positive</p>
 
-    <p><input type="radio" value="False" name="isPositive" id="isPositive"/>negative</p>
+    </datalist>
 
-    <p><input type="submit" value="submit"/></p>
+    <p><input type="radio" value="True" name="isPositive" checked="1" id="isPositive"/>Positive</p>
 
+    <p><input type="radio" value="False" name="isPositive" id="isPositive"/>Negative</p>
+
+    <p><input type="submit" value="Submit"/></p>
+    </input><BR>
     <input id="lati" type="text" name="lat" value="50.0"/>
     <input id="long" type="text" name="lon" value="20.0"/>
 

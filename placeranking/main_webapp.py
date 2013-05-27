@@ -11,8 +11,10 @@ from placeranking.model import Opinion
 class MyHandler(webapp.RequestHandler):
     def get(self):
         opinionsQuery = db.GqlQuery('select * from Opinion order by when desc')
+        categoriesQuery = db.GqlQuery('select * from OurCategory order by categoryName')
         values = {
-            'opinions': opinionsQuery
+            'opinions': opinionsQuery,
+            'categories': categoriesQuery
         }
         self.response.headers.add_header("Cache-Control", "no-store")
         self.response.out.write(unicode(template.render('templates/main.html', values)))
