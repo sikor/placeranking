@@ -14,6 +14,19 @@
     google.load('visualization', '1', {'packages': ['geochart']})
     google.setOnLoadCallback(drawRegionsMap)
 
+     var earthOptions = {
+        colorAxis: {minvalue: -10, colors: ['red', 'green']}
+     }
+    var resolution = 'countries'
+    var options = earthOptions
+
+    function drawChart(dataArray, options, onRegionClick) {
+        var data = google.visualization.arrayToDataTable(dataArray)
+        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'regionClick', onRegionClick)
+        chart.draw(data, options);
+    }
+
     function drawRegionsMap() {
         var dataArray = [ ]
         dataArray.push(['Country', 'Sentiment'])
@@ -23,10 +36,17 @@
             resolution: 'provinces'
         };
 
-        var earthOptions = {
-            colorAxis: {minvalue: -10, colors: ['red', 'green']}
-        }
 
+
+        var onRegionClick = function(event){
+            var clickedRegion = event.region
+            if( resolution == 'countries'){
+                resolution = 'provinces'
+                options.resolution = 'provinces'
+                options.region = clickedRegion
+                drawChart()
+            }
+        }
 
         $.ajax({
             url: "/rest/summary",
@@ -38,9 +58,7 @@
                         var opinions = parseInt(country.countPos) - parseInt(country.countNeg)
                         dataArray.push([countryName, opinions])
                     })
-                    var data = google.visualization.arrayToDataTable(dataArray)
-                    var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
-                    chart.draw(data, earthOptions);
+                    drawChart(dataArray, earthOptions, onRegionClick);
                 }
         );
 
