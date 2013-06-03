@@ -54,7 +54,14 @@ class OpinionHandler(webapp.RequestHandler):
             return
 
         sentiment = getSentiment(pComment)
-        pSentiment = sentiment[0]
+
+        if sentiment[0] == 'pos':
+            pSentiment = "Positive"
+        elif sentiment[0] == 'neg':
+            pSentiment = "Negative"
+        else:
+            pSentiment = 'Neutrual'
+
         pProbabilityPos = sentiment[1]
         pProbabilityNeg = sentiment[2]
         pProbabilityNeu = sentiment[3]
