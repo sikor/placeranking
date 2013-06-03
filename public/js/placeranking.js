@@ -19,7 +19,14 @@ function initialize() {
     }
 
     var styleMarkerVisualization = function(opinion, position){
-        var color = opinion.isPositive =="True" ? "#00FF00" : "#FF0000"
+        var color;
+        if(opinion.sentiment == "Positive")
+            color = "#00FF00";
+        else if(opinion.sentiment == "Negative")
+            color = "#FF0000";
+        else
+            color = "FFFF00";
+
         var marker = new StyledMarker({
             styleIcon:new StyledIcon(
                 StyledIconTypes.MARKER,
