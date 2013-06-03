@@ -41,7 +41,7 @@ class OpinionHandler(webapp.RequestHandler):
             category.put()
         else:
             category = categories.get()
-        pIsPositive = (self.request.get('isPositive') == 'True')
+        pSentiment = "Positive" #TODO get probabilities and set sentiment
         pLat = float(self.request.get('lat'))
         pLon = float(self.request.get('lon'))
         pLocation = db.GeoPt(lat=pLat, lon=pLon)
@@ -50,7 +50,7 @@ class OpinionHandler(webapp.RequestHandler):
         if pComment is u"":
             self.response.write("Comment cannot be empty.")
             return
-        opinion = Opinion(comment=pComment, isPositive=pIsPositive, location=pLocation, city=details.city,
+        opinion = Opinion(comment=pComment, sentiment=pSentiment, location=pLocation, city=details.city,
                           continent=details.continent, country=details.country, region=details.region, category=category)
         for prop in details.properties():
             if prop in ['city', 'continent']:
@@ -66,9 +66,9 @@ class OpinionHandler(webapp.RequestHandler):
                 parentKey = getattr(details, str(parentProp), 'root')
                 entity = Counter(areaName=key, parentKey=parentKey)
 
-            if pIsPositive:
+            if pSentiment == 'Positive':
                 entity.countPos += 1
-            else:
+            elif pSentiment == 'Negative':
                 entity.countNeg += 1
             entity.put()
 
