@@ -50,7 +50,7 @@
         <th>country</th>
         <th>region</th>
         <th>city</th>
-        <th>Sentiment</th>
+        <th>sentiment</th>
         <th>Positive Probability</th>
         <th>Negative Probability</th>
         <th>Neutral Probability</th>
@@ -64,7 +64,7 @@
             <td>{{ opinion.country }},</td>
             <td>{{ opinion.region }},</td>
             <td>{{ opinion.city }},</td>
-            <td>{% if opinion.sentiment == 'Positive' %} Positive {% else %}{% if opinion.sentiment == 'Negative' %} Negative {% else %} Neutral {% endif %}{% endif %},</td>
+            <td>{{ opinion.sentiment }}</td>
             <td>{{ opinion.probabilityPos }}</td>
             <td>{{ opinion.probabilityNeg }}</td>
             <td>{{ opinion.probabilityNeu }}</td>
@@ -94,7 +94,7 @@
                            "<td>{{ opinion.country }}</td> " +
                            "<td>{{ opinion.region }},</td> " +
                            "<td>{{ opinion.city }},</td> " +
-                           "<td>{% if opinion.sentiment == 'Positive' %} Positive {% else %}{% if opinion.sentiment == 'Negative' %} Negative {% else %} Neutral {% endif %}{% endif %},</td>" +
+                           "<td>{{ opinion.sentiment }}</td>" +
                            "<td>{{ opinion.probabilityPos }}</td>" +
                            "<td>{{ opinion.probabilityNeg }}</td>" +
                            "<td>{{ opinion.probabilityNeu }}</td>" +

@@ -13,10 +13,10 @@ class OurCategory(DictModel):
 
 class Opinion(DictModel):
     comment = db.StringProperty(required=True, multiline=True)
-    sentiment = db.StringProperty(required=True)
-    probabilityNeg = db.FloatProperty(required=True)
-    probabilityPos = db.FloatProperty(required=True)
-    probabilityNeu = db.FloatProperty(required=True)
+    sentiment = db.StringProperty()
+    probabilityNeg = db.FloatProperty(required=True, default=1.0)
+    probabilityPos = db.FloatProperty(required=True, default=1.0)
+    probabilityNeu = db.FloatProperty(required=True, default=1.0)
     location = db.GeoPtProperty(required=True)
     when = db.DateTimeProperty(auto_now_add=True)
     continent = db.StringProperty()
