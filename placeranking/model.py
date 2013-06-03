@@ -8,6 +8,9 @@ class DictModel(db.Model):
         return dict([(p, unicode(getattr(self, p))) for p in self.properties()])
 
 
+class OurCategory(DictModel):
+    categoryName = db.StringProperty(required=True)
+
 class Opinion(DictModel):
     comment = db.StringProperty(required=True, multiline=True)
     isPositive = db.BooleanProperty(required=True)
@@ -17,8 +20,7 @@ class Opinion(DictModel):
     country = db.StringProperty()
     region = db.StringProperty()
     city = db.StringProperty()
-    #category = db.ReferenceProperty(OurCategory)
-    category = db.StringListProperty()
+    category = db.ReferenceProperty(OurCategory)
 
 
 class Counter(DictModel):
@@ -28,5 +30,3 @@ class Counter(DictModel):
     countNeg = db.IntegerProperty(required=True, default=0)
 
 
-class OurCategory(DictModel):
-    categoryName = db.StringProperty(required=True)
