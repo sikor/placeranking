@@ -9,6 +9,7 @@ import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from placeranking.model import *
+from placeranking.sentimenter import Sentimenter
 import placeranking.geocoding
 
 
@@ -52,6 +53,7 @@ class OpinionHandler(webapp.RequestHandler):
             return
         opinion = Opinion(comment=pComment, isPositive=pIsPositive, location=pLocation, city=details.city,
                           continent=details.continent, country=details.country, region=details.region, category=category)
+
         for prop in details.properties():
             if prop in ['city', 'continent']:
                 continue
