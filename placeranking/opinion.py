@@ -50,8 +50,12 @@ class OpinionHandler(webapp.RequestHandler):
         if pComment is u"":
             self.response.write("Comment cannot be empty.")
             return
+        pProbabilityPos =1.0
+        pProbabilityNeg = 1.0
+        pProbabilityNeu = 1.0
         opinion = Opinion(comment=pComment, sentiment=pSentiment, location=pLocation, city=details.city,
-                          continent=details.continent, country=details.country, region=details.region, category=category)
+                          continent=details.continent, country=details.country, region=details.region, category=category,
+                          probabilityPos = pProbabilityPos, probabilityNeg = pProbabilityNeg, probabilityNeu = pProbabilityNeu)
         for prop in details.properties():
             if prop in ['city', 'continent']:
                 continue
