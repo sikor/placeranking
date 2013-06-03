@@ -24,9 +24,6 @@
             {% endfor %}
     </datalist>
 
-    <p><input type="radio" value="True" name="isPositive" checked="1" id="isPositive"/>Positive</p>
-
-    <p><input type="radio" value="False" name="isPositive" id="isPositive"/>Negative</p>
 
     <p><input type="submit" value="Submit"/></p>
     </input><BR>
@@ -54,6 +51,9 @@
         <th>region</th>
         <th>city</th>
         <th>isPositive</th>
+        <th>Positive Probability</th>
+        <th>Negative Probability</th>
+        <th>Neutral Probability</th>
         <th>when</th>
     </tr>
         {% for opinion in opinions %}
@@ -64,7 +64,10 @@
             <td>{{ opinion.country }},</td>
             <td>{{ opinion.region }},</td>
             <td>{{ opinion.city }},</td>
-            <td>{% if opinion.isPositive %} Positive {% else %} Negative {% endif %},</td>
+            <td>{% if opinion.sentiment == 'Positive' %} Positive {% else %}{% if opinion.sentiment == 'Negative' %} Negative {% else %} Neutral {% endif %}{% endif %},</td>
+            <td>{{ opinion.probabilityPos }}</td>
+            <td>{{ opinion.probabilityNeg }}</td>
+            <td>{{ opinion.probabilityNeu }}</td>
             <td>{{ opinion.when }}</td>
             <tr>
         {% endfor %}
