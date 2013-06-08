@@ -94,7 +94,10 @@
                            "<td>{{ opinion.country }}</td> " +
                            "<td>{{ opinion.region }},</td> " +
                            "<td>{{ opinion.city }},</td> " +
-                           "<td>{% if opinion.isPositive %} Positive {% else %} Negative {% endif %},</td> " +
+                           "<td>{{ opinion.sentiment }}</td>" +
+                           "<td>{{ opinion.probabilityPos }}</td>" +
+                           "<td>{{ opinion.probabilityNeg }}</td>" +
+                           "<td>{{ opinion.probabilityNeu }}</td>" +
                            "<td>{{ opinion.when }} </td> " +
                            "</tr> ");
                }
