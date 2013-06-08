@@ -10,7 +10,7 @@ def getSentiment(opinion):
 
     url = "http://text-processing.com/api/sentiment/"
     data = {
-        "text": opinion
+        "text": opinion.encode('ascii', 'ignore')
     }
 
     data = urllib.urlencode(data)
@@ -22,5 +22,7 @@ def getSentiment(opinion):
     probability = ans["probability"]
     log = ", ".join(("sentiment:", str(ans["label"]), str(probability["pos"]), str(probability["neg"]), str(probability["neutral"])))
     logging.error(log)
+    if ans["label"] in set(["Neutral, pos, neg"]):
+        return "neutral", 0, 0, 0
 
     return str(ans["label"]), probability["pos"], probability["neg"], probability["neutral"]

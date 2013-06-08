@@ -35,8 +35,18 @@ class Summary(webapp.RequestHandler):
         self.response.out.write(unicode(template.render('templates/summary.html', {})))
 
 
+class Import(webapp.RequestHandler):
+    def get(self):
+        categoriesQuery = db.GqlQuery('select * from OurCategory order by categoryName')
+        values = {
+            'categories': categoriesQuery
+        }
+        self.response.headers.add_header("Cache-Control", "no-store")
+        self.response.out.write(unicode(template.render('templates/import.html', values)))
+
+
 def main():
-    app = webapp.WSGIApplication([('/summary', Summary), (r'.*', MyHandler), ], debug=True)
+    app = webapp.WSGIApplication([('/summary', Summary), ('/import', Import), (r'.*', MyHandler)], debug=True)
     wsgiref.handlers.CGIHandler().run(app)
 
 if __name__ == "__main__":

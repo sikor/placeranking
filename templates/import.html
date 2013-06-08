@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Import </title>
+</head>
+<body>
+<h2>Import opinions from Twitter</h2>
+<a href="/">See opinions</a>
+<form id="form" action="rest/import" method="post" accept-charset="utf-8">
+    <p>Query: <textarea id="query" name="query" rows="5" cols="60" required="required"></textarea></p>
+    <p>Category:
+    <input list="categories" name="category" autocomplete="off" required="required">
+    <datalist id="categories">
+            {% for category in categories %}
+                <option value="{{ category.categoryName }}">
+            {% endfor %}
+    </datalist></p>
+
+    <p><input type="submit" value="Submit"/></p></input><BR>
+    <input id="lati" type="text" name="lat" value="50.0"/>
+    <input id="long" type="text" name="lon" value="20.0"/>
+</form>
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type='text/javascript'>
+
+</script>
+</body>
+
+</html>
