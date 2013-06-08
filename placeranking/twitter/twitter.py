@@ -1,5 +1,5 @@
 from placeranking.twitter import TwitterSearch, TwitterSearchOrder, TwitterSearchException
-
+import logging
 __author__ = 'pawel'
 
 customer = "BmxcBtrl9jM1oOs68z1Q"
@@ -27,11 +27,14 @@ def getTweets(query, maxCount=20):
         ts.authenticate() # we need to use the oauth authentication first to be able to sign messages
         counter = 0
         for tweet in ts.searchTweetsIterable(tso): # this is where the fun actually starts :)
-            counter += 1
-            if counter == maxCount:
-                break
-            print '@%s tweeted: %s' % (tweet['user']['screen_name'].encode('ascii', 'replace'), tweet['text'].encode('ascii', 'replace'))
-            yield tweet['text']
+            try:
+                counter += 1
+                if counter == maxCount:
+                    break
+                logging.info('@%s tweeted: %s' % (tweet['user']['screen_name'].encode('ascii', 'replace'), tweet['text'].encode('ascii', 'replace')))
+                yield tweet['text']
+            except Exception as e:
+                print e.message
 
     except TwitterSearchException, e: # take care of all those ugly errors if there are some
         print e.message
