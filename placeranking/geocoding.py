@@ -3,7 +3,6 @@ import json
 import urllib2
 import logging
 
-
 class DetailedPosition:
     def __init__(self, continent, country, region, city):
         self.continent = continent

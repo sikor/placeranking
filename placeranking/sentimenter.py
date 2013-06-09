@@ -1,10 +1,16 @@
 __author__ = 'pawel'
 
+
+
 import json
 import urllib
 import urllib2
 import logging
+from sentiement.sentiment import SentimentAnalyzer
 
+
+sentimentAnalyzer = SentimentAnalyzer()
+sentimentAnalyzer.train()
 
 def getSentiment(opinion):
 
@@ -26,3 +32,11 @@ def getSentiment(opinion):
         return "neutral", 0, 0, 0
 
     return str(ans["label"]), probability["pos"], probability["neg"], probability["neutral"]
+
+
+def getSentimentOffline(opinion):
+    prob = sentimentAnalyzer.analyze(opinion)
+    return 'pos' if prob.prob('pos') > prob.prob('neg') else 'neg', prob.prob('pos'), prob.prob('neg')
+
+
+

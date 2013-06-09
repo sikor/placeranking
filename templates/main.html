@@ -83,6 +83,10 @@
    <script src="js/StyledMarker.js" type="text/javascript"></script>
    <script src="js/placeranking.js" type="text/javascript"></script>
    <script>
+        function appendOpinions() {
+
+        }
+
        function filter(val) {
            $(".toRemove").remove();
            {% for opinion in opinions %}
@@ -97,7 +101,6 @@
                            "<td>{{ opinion.sentiment }}</td>" +
                            "<td>{{ opinion.probabilityPos }}</td>" +
                            "<td>{{ opinion.probabilityNeg }}</td>" +
-                           "<td>{{ opinion.probabilityNeu }}</td>" +
                            "<td>{{ opinion.when }} </td> " +
                            "</tr> ");
                }
