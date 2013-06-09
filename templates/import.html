@@ -2,6 +2,7 @@
 <html>
 <head>
     <title> Import </title>
+    <link href="css/placeranking.css" rel="stylesheet">
 </head>
 <body>
 <h2>Import opinions from Twitter</h2>
@@ -15,19 +16,31 @@
                 <option value="{{ category.categoryName }}">
             {% endfor %}
     </datalist></p>
-
+    <p>maximumCount: <input id="maxCount" type="text" name="maxCount" value="20" /></p>
+    <p>target coordinates:
+        <input id="tlati" type="text" name="tlat" value="50.0"/>
+        <input id="tlong" type="text" name="tlon" value="20.0"/>
+    </p>
+    <p>source coordinates:
+        <input type="checkbox" name="includeSource" value="true" />
+        <input id="slati" type="text" name="slat" value="50.0"/>
+        <input id="slong" type="text" name="slon" value="20.0"/>
+    </p>
+    <p>source distance[km]: <input id="distance" type="text" name="distance" value="1000"/></p>
     <p><input type="submit" value="Submit"/></p></input><BR>
-    <input id="lati" type="text" name="lat" value="50.0"/>
-    <input id="long" type="text" name="lon" value="20.0"/>
-</form>
 
+</form>
+<div id="map"></div>
 
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type='text/javascript'>
-
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDA4gHmfOeEzgHYAIrApmFdB5LtyWT2GU0&sensor=false"></script>
+<script src="js/StyledMarker.js" type="text/javascript"></script>
+<script src="js/mapform.js" type="text/javascript"></script>
+<script type="text/javascript">
+    bindMapToForm([["tlati", "tlong", "T"], ["slati", "slong", "S"]])
 </script>
 </body>
 

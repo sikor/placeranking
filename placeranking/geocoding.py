@@ -38,7 +38,6 @@ class Geocoder:
         url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + str(lat) + ',' + str(lon) + '&sensor=false'
         ans = json.load(urllib2.urlopen(url))
         closest = ans['results'][0]['address_components']
-        logging.error(closest[0][u'types'])
         infoMap = dict([(x[u'types'][0], x[u'long_name']) for x in closest if 'types' in x and len(x['types']) > 0])
         infoMapShort = dict([(x[u'types'][0], x[u'short_name']) for x in closest if 'types' in x and len(x['types']) > 0])
         keys = [self.COUNTRY, self.CITY, self.REGION]
@@ -56,7 +55,7 @@ class Geocoder:
         else:
             region = None
         continent = self.getContinentForCountry(countryShort)
-        logging.error(unicode(continent) + ', ' + unicode(country) + ', ' + unicode(region) + ', ' + unicode(city))
+        logging.info(unicode(continent) + ', ' + unicode(country) + ', ' + unicode(region) + ', ' + unicode(city))
         return DetailedPosition(continent, country, region, city)
 
     def getContinentForCountry(self, country):

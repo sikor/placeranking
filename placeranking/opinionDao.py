@@ -38,8 +38,8 @@ def addOpinion(comment, pCategoryName, lat, lon):
     pProbabilityNeg = sentiment[2]
     pProbabilityNeu = sentiment[3]
     logging.error(str((
-    comment, pSentiment, pLocation, details.city, details.continent, details.country, details.region, category,
-    pProbabilityPos, pProbabilityNeg, pProbabilityNeu)))
+        comment, pSentiment, pLocation, details.city, details.continent, details.country, details.region, category,
+        pProbabilityPos, pProbabilityNeg, pProbabilityNeu)))
     opinion = Opinion(comment=comment, sentiment=pSentiment, location=pLocation, city=details.city,
                       continent=details.continent, country=details.country, region=details.region, category=category,
                       probabilityPos=pProbabilityPos, probabilityNeg=pProbabilityNeg, probabilityNeu=pProbabilityNeu)

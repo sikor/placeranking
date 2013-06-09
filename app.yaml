@@ -26,6 +26,9 @@ handlers:
 - url: /js
   static_dir: public/js
 
+builtins:
+- deferred: on
+
 
 #libraries:
 #- name: django

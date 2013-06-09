@@ -14,9 +14,9 @@ class OurCategory(DictModel):
 class Opinion(DictModel):
     comment = db.StringProperty(required=True, multiline=True)
     sentiment = db.StringProperty()
-    probabilityNeg = db.FloatProperty(required=True, default=1.0)
-    probabilityPos = db.FloatProperty(required=True, default=1.0)
-    probabilityNeu = db.FloatProperty(required=True, default=1.0)
+    probabilityNeg = db.FloatProperty(required=True, default=0.0)
+    probabilityPos = db.FloatProperty(required=True, default=0.0)
+    probabilityNeu = db.FloatProperty(required=True, default=0.0)
     location = db.GeoPtProperty(required=True)
     when = db.DateTimeProperty(auto_now_add=True)
     continent = db.StringProperty()
@@ -24,6 +24,7 @@ class Opinion(DictModel):
     region = db.StringProperty()
     city = db.StringProperty()
     category = db.ReferenceProperty(OurCategory)
+    senderLocation = db.GeoPtProperty()
 
 
 class Counter(DictModel):
