@@ -18,6 +18,15 @@ function initialize() {
         return marker
     }
 
+    var markerForCluster = function (opinion, position) {
+        var marker = new google.maps.Marker({
+            position: position,
+            title: opinion.comment
+        });
+
+        return marker
+    }
+
     var styleMarkerVisualization = function (opinion, position) {
         var color;
         if (opinion.sentiment == "Positive")
@@ -63,7 +72,7 @@ function initialize() {
     }
 
 
-    var visualizationEngine = styleMarkerVisualization
+    var visualizationEngine = markerForCluster
     var listenerEngine = infoWindowListener
 
 
@@ -72,12 +81,15 @@ function initialize() {
         cache: true,
         dataType: "json"
     }).done(function (jsonOpinions) {
+            var markers = []
             $.each(jsonOpinions, function (index, opinion) {
                 var latlngArr = opinion.location.split(",");
                 var position = new google.maps.LatLng(latlngArr[0], latlngArr[1])
                 var obj = visualizationEngine(opinion, position)
+                markers.push(obj)
                 listenerEngine(opinion, obj)
             })
+            var markerCluster = new MarkerClusterer(map, markers)
         });
 
 

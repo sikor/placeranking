@@ -1,6 +1,7 @@
 from placeranking.twitter import TwitterSearch, TwitterSearchOrder, TwitterSearchException
 import logging
 import placeranking.opinionDao
+import re
 
 __author__ = 'pawel'
 
@@ -8,6 +9,16 @@ customer = "BmxcBtrl9jM1oOs68z1Q"
 customer_secret = "W5q9G6SwGraGb6sddthTr7pEUP7Ps18pPJBcJTGs"
 token = "1441295683-FyAw56ettjrdpYdQMXpUSv3PRYInfgolj1TCZih"
 token_secret = "OBppMl2rGGXYisp9cViGDNGX6bq1es6CoYLaKPl2XU"
+
+urlRegExp = re.compile(r"((http:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*)")
+atRegExp = re.compile(r"@([a-z]|[A-Z]|[0-9]|[/.]|[~])*")
+
+
+def cleanTweet(tweet):
+    tweet = urlRegExp.sub("", tweet)
+    tweet = atRegExp.sub("", tweet)
+    logging.info("cleared tweet:" + tweet)
+    return tweet
 
 
 def getTweets(query, maxCount=20, slat=None, slon=None, srad=None):
@@ -36,7 +47,7 @@ def getTweets(query, maxCount=20, slat=None, slon=None, srad=None):
                 if counter == maxCount:
                     break
                 logging.info('@%s tweeted: %s' % (
-                tweet['user']['screen_name'].encode('ascii', 'replace'), tweet['text'].encode('ascii', 'replace')))
+                    tweet['user']['screen_name'].encode('ascii', 'replace'), tweet['text'].encode('ascii', 'replace')))
                 yield tweet['text']
             except Exception as e:
                 print e.message
@@ -48,4 +59,7 @@ def getTweets(query, maxCount=20, slat=None, slon=None, srad=None):
 def findTweets(query, category, lat, lon, maxCount=20, slat=None, slon=None, srad=None):
     logging.info("deferred task")
     for tweet in getTweets(query, maxCount=maxCount, slat=slat, slon=slon, srad=srad):
-        placeranking.opinionDao.addOpinion(tweet, category, lat, lon)
+        placeranking.opinionDao.addOpinion(cleanTweet(tweet), category, lat, lon)
+    logging.info("finished task")
+
+

@@ -57,9 +57,9 @@ def addOpinion(comment, pCategoryName, lat, lon):
             parentKey = getattr(details, str(parentProp), 'root')
             entity = Counter(areaName=key, parentKey=parentKey)
 
-        if pSentiment == 'Positive':
+        if pSentiment == 'pos':
             entity.countPos += 1
-        elif pSentiment == 'Negative':
+        elif pSentiment == 'neg':
             entity.countNeg += 1
         entity.put()
     print opinion
