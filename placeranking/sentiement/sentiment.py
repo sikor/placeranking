@@ -86,7 +86,9 @@ class SentimentAnalyzer(object):
         self.evaluate_classifier(self.best_word_features)
 
     def analyze(self, text):
-        return self.classifier.prob_classify(self.word_feats(re.findall(r"[\w']+|[.,!?;]", text.rstrip())))
+        # if not self.__getattribute__('best_words'):
+        #     self.train()
+        return self.classifier.prob_classify(self.best_word_features(re.findall(r"[\w']+|[.,!?;]", text.rstrip())))
 
 
 
