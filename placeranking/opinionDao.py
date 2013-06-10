@@ -12,6 +12,7 @@ from placeranking.model import *
 import placeranking.geocoding
 from placeranking.sentimenter import getSentiment
 import logging
+import math
 
 parentPropOf = {'country': None, 'region': 'country'}
 
@@ -37,9 +38,29 @@ def addOpinion(comment, pCategoryName, lat, lon):
     pProbabilityPos = sentiment[1]
     pProbabilityNeg = sentiment[2]
     pProbabilityNeu = sentiment[3]
-    logging.error(str((
+
+    logging.info(str((
         comment, pSentiment, pLocation, details.city, details.continent, details.country, details.region, category,
         pProbabilityPos, pProbabilityNeg, pProbabilityNeu)))
+
+
+    highInformation = False
+    for prob in sentiment[1:]:
+        if prob > 0.6:
+            highInformation = True
+            break
+    if math.fabs(pProbabilityNeg - pProbabilityPos) > 0.1:
+        highInformation = True
+
+    if not highInformation:
+        logging.info("discarding opinion because of low information")
+        return
+
+    # if pSentiment == "neutral":
+    #     logging.info("discarding opinion because of netral sentiment")
+    #     return
+
+
     opinion = Opinion(comment=comment, sentiment=pSentiment, location=pLocation, city=details.city,
                       continent=details.continent, country=details.country, region=details.region, category=category,
                       probabilityPos=pProbabilityPos, probabilityNeg=pProbabilityNeg, probabilityNeu=pProbabilityNeu)

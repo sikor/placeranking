@@ -11,14 +11,18 @@ from placeranking.sentimenter import *
 import placeranking.opinionDao
 import placeranking.twitter.twitter
 from google.appengine.ext import deferred
+from google.appengine.api import taskqueue
 
 
 class ImportHandler(webapp.RequestHandler):
     def post(self):
-        pQuery = unicode(self.request.get('query'))
+        # q = taskqueue.Queue('default')
+        # q.purge()
+        pQuery = str(self.request.get('query'))
         pCategoryName = unicode(self.request.get('category'))
         pTLat = float(self.request.get('tlat'))
         pTLon = float(self.request.get('tlon'))
+        pTRad = float(self.request.get('trad'))
         if "includeSource" in self.request.arguments():
             pSLat = float(self.request.get('slat'))
             pSLon = float(self.request.get('slon'))
@@ -30,7 +34,8 @@ class ImportHandler(webapp.RequestHandler):
             distance = None
 
         pMaxCount = int(self.request.get('maxCount'))
-        deferred.defer(placeranking.twitter.twitter.findTweets, pQuery, pCategoryName, pTLat, pTLon, pMaxCount, pSLat, pSLon, distance)
+
+        deferred.defer(placeranking.twitter.twitter.findTweets, pQuery, pCategoryName, pTLat, pTLon, pTRad, pMaxCount, pSLat, pSLon, distance)
         self.redirect('/home')
 
 

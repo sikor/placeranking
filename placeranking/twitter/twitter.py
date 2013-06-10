@@ -2,6 +2,8 @@ from placeranking.twitter import TwitterSearch, TwitterSearchOrder, TwitterSearc
 import logging
 import placeranking.opinionDao
 import re
+import random
+import math
 
 __author__ = 'pawel'
 
@@ -29,6 +31,7 @@ def getTweets(query, maxCount=20, slat=None, slon=None, srad=None):
         tso.setCount(maxCount) # please dear Mr Twitter, only give us 1 results per page
         tso.setIncludeEntities(False) # and don't give us all those entity information
         if slat and slon and srad:
+            logging.info("setting source")
             tso.setGeocode(slat, slon, srad, "km")
 
         # it's about time to create a TwitterSearch object with our secret tokens
@@ -56,10 +59,21 @@ def getTweets(query, maxCount=20, slat=None, slon=None, srad=None):
         print e.message
 
 
-def findTweets(query, category, lat, lon, maxCount=20, slat=None, slon=None, srad=None):
+def findTweets(query, category, lat, lon, trad=0.0, maxCount=20, slat=None, slon=None, srad=None):
     logging.info("deferred task")
     for tweet in getTweets(query, maxCount=maxCount, slat=slat, slon=slon, srad=srad):
-        placeranking.opinionDao.addOpinion(cleanTweet(tweet), category, lat, lon)
+        rlat = lat + getLatOffset(trad*getRandom())
+        rlon = lon + getLonOffset(trad*getRandom(), lat)
+        placeranking.opinionDao.addOpinion(cleanTweet(tweet), category, rlat, rlon)
     logging.info("finished task")
 
 
+def getRandom():
+    r = random.random()
+    return r*2.0 - 1.0
+
+def getLatOffset(kmeters):
+    return kmeters/111.111
+
+def getLonOffset(kmeters, latitude):
+    return kmeters/ (111.111*math.cos(latitude))

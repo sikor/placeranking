@@ -1,7 +1,5 @@
 __author__ = 'pawel'
 
-
-
 import json
 import urllib
 import urllib2

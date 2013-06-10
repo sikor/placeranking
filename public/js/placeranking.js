@@ -29,9 +29,9 @@ function initialize() {
 
     var styleMarkerVisualization = function (opinion, position) {
         var color;
-        if (opinion.sentiment == "Positive")
+        if (opinion.sentiment == "pos")
             color = "#00FF00";
-        else if (opinion.sentiment == "Negative")
+        else if (opinion.sentiment == "neg")
             color = "#FF0000";
         else
             color = "FFFF00";
@@ -72,7 +72,7 @@ function initialize() {
     }
 
 
-    var visualizationEngine = markerForCluster
+    var visualizationEngine = styleMarkerVisualization
     var listenerEngine = infoWindowListener
 
 
@@ -86,10 +86,10 @@ function initialize() {
                 var latlngArr = opinion.location.split(",");
                 var position = new google.maps.LatLng(latlngArr[0], latlngArr[1])
                 var obj = visualizationEngine(opinion, position)
-                markers.push(obj)
+//                markers.push(obj)
                 listenerEngine(opinion, obj)
             })
-            var markerCluster = new MarkerClusterer(map, markers)
+//            var markerCluster = new MarkerClusterer(map, markers)
         });
 
 
