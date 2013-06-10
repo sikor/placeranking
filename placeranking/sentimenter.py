@@ -25,7 +25,7 @@ def getSentiment(opinion):
     ans = json.load(urllib2.urlopen(request))
     probability = ans["probability"]
     log = ", ".join(("sentiment:", str(ans["label"]), str(probability["pos"]), str(probability["neg"]), str(probability["neutral"])))
-    logging.error(log)
+    logging.info(log)
     if ans["label"] in set(["Neutral, pos, neg"]):
         return "neutral", 0, 0, 0
 

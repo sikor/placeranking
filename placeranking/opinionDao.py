@@ -83,5 +83,4 @@ def addOpinion(comment, pCategoryName, lat, lon):
         elif pSentiment == 'neg':
             entity.countNeg += 1
         entity.put()
-    print opinion
     opinion.put()
