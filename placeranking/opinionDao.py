@@ -10,7 +10,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from placeranking.model import *
 import placeranking.geocoding
-from placeranking.sentimenter import getSentiment
+from placeranking.sentimenter import getSentiment, getSentimentOffline
 import logging
 import math
 
@@ -33,7 +33,7 @@ def addOpinion(comment, pCategoryName, lat, lon):
     if comment is u"":
         raise Exception("comment cant be empty")
 
-    sentiment = getSentiment(comment)
+    sentiment = getSentimentOffline(comment)
     pSentiment = sentiment[0]
     pProbabilityPos = sentiment[1]
     pProbabilityNeg = sentiment[2]

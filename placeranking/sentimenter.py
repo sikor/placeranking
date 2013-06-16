@@ -34,7 +34,12 @@ def getSentiment(opinion):
 
 def getSentimentOffline(opinion):
     prob = sentimentAnalyzer.analyze(opinion)
-    return 'pos' if prob.prob('pos') > prob.prob('neg') else 'neg', prob.prob('pos'), prob.prob('neg')
+    sentiment = 'pos' if prob.prob('pos') > prob.prob('neg') else 'neg'
+    logging.info('%s : %d' % (sentiment, prob.prob(sentiment)))
+    if prob.prob(sentiment) < 0.6:
+        sentiment = 'neutral'
+
+    return sentiment, prob.prob('pos'), prob.prob('neg'), 0.0
 
 
 

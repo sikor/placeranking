@@ -7,15 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
- <!--   <link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/placeranking.css" rel="stylesheet">
 </head>
 <body>
+<div class="main center">
 <h1>Express your opinion</h1>
+
+    <div style="float: left">
 
 
 <form id="form" action="rest/opinion" method="post" accept-charset="utf-8">
-    <p><textarea id="comment" name="comment" rows="5" cols="60" required="required"></textarea></p>
+    <p><textarea id="comment" name="comment" rows="5" cols="69" required="required"></textarea></p>
+    <input id="lati" type="text" name="lat" value="50.0"/>
+    <input id="long" type="text" name="lon" value="20.0"/><BR>
     Category:
     <input list="categories" name="category" autocomplete="off" required="required">
     <datalist id="categories">
@@ -25,16 +30,23 @@
     </datalist>
 
 
-    <p><input type="submit" value="Submit"/></p>
+    <input type="submit" value="Submit" class="btn btn-primary">
     </input><BR>
-    <input id="lati" type="text" name="lat" value="50.0"/>
-    <input id="long" type="text" name="lon" value="20.0"/>
-</form>
 
+</form>
+    <br>
+
+</div>
 <div id="map"></div>
-<a href="/summary">See summary</a>
-<a href="/import">Import</a>
-<div id="opinions">
+<div>
+<a href="/summary" class="btn btn-primary">See summary</a>
+<a href="/import" class="btn btn-primary">Import</a>
+</div>
+
+</div>
+<div id="opinions" class="center">
+
+<BR>
     Filter:
     <select onchange="filter(this.value)">
         <option value="all">All</option>
@@ -58,7 +70,7 @@
         {% for opinion in opinions %}
             <tr class="toRemove">
             <td>{{ opinion.comment }}</td>
-            <td>{{ opinion.category.categoryName }}</td>
+            <td class="category">{{ opinion.category.categoryName }}</td>
             <td>{{ opinion.continent }},</td>
             <td>{{ opinion.country }},</td>
             <td>{{ opinion.region }},</td>
@@ -84,30 +96,16 @@
 
    <script type="text/javascript">
 
-        function appendOpinions() {
-
-        }
-
        function filter(val) {
-           $(".toRemove").remove();
-           {% for opinion in opinions %}
-               if (val == "{{ opinion.category.categoryName }}" || val == 'all') {
-                   $("table").append("<tr class='toRemove'>" +
-                           "<td>{{ opinion.comment }}</td> " +
-                           "<td>{{ opinion.category.categoryName }}</td> " +
-                           "<td>{{ opinion.continent }}</td>" +
-                           "<td>{{ opinion.country }}</td> " +
-                           "<td>{{ opinion.region }},</td> " +
-                           "<td>{{ opinion.city }},</td> " +
-                           "<td>{{ opinion.sentiment }}</td>" +
-                           "<td>{{ opinion.probabilityPos }}</td>" +
-                           "<td>{{ opinion.probabilityNeg }}</td>" +
-                           "<td>{{ opinion.when }} </td> " +
-                           "</tr> ");
-               }
-           {% endfor %}
-
+            $(".category").each(function() {
+                $(this).parent().show();
+                if($(this).text() !=  val && val != 'all'){
+                    $(this).parent().hide();
+                }
+            });
        }
+
    </script>
+
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 import re, itertools, os
 from nltk.classify import NaiveBayesClassifier
 from nltk.metrics import BigramAssocMeasures
@@ -64,7 +65,6 @@ class SentimentAnalyzer(object):
             pos_score = BigramAssocMeasures.chi_sq(cond_word_fd['pos'][word], (freq, pos_word_count), total_word_count)
             neg_score = BigramAssocMeasures.chi_sq(cond_word_fd['neg'][word], (freq, neg_word_count), total_word_count)
             word_scores[word] = pos_score + neg_score
-
         return word_scores
 
     def word_feats(self, words):
@@ -78,7 +78,7 @@ class SentimentAnalyzer(object):
 
     #creates feature selection mechanism that only uses best words
     def best_word_features(self, words):
-        return dict([(word, True) for word in words if word in self.best_words])
+        return dict([(word.lower(), True) for word in words if word.lower() in self.best_words])
 
     def train(self):
         word_scores = self.create_word_scores()
@@ -89,8 +89,6 @@ class SentimentAnalyzer(object):
         # if not self.__getattribute__('best_words'):
         #     self.train()
         return self.classifier.prob_classify(self.best_word_features(re.findall(r"[\w']+|[.,!?;]", text.rstrip())))
-
-
 
 
 
