@@ -14,27 +14,25 @@
 <div class="main center">
 <h1>Express your opinion</h1>
 
-    <div style="float: left">
+<div style="float: left">
 
 
-<form id="form" action="rest/opinion" method="post" accept-charset="utf-8">
-    <p><textarea id="comment" name="comment" rows="5" cols="69" required="required"></textarea></p>
-    <input id="lati" type="text" name="lat" value="50.0"/>
-    <input id="long" type="text" name="lon" value="20.0"/><BR>
-    Category:
-    <input list="categories" name="category" autocomplete="off" required="required">
-    <datalist id="categories">
-            {% for category in categories %}
-                <option value="{{ category.categoryName }}">
-            {% endfor %}
-    </datalist>
+    <form id="form" action="rest/opinion" method="post" accept-charset="utf-8">
+        <p><textarea id="comment" name="comment" rows="5" cols="69" required="required"></textarea></p>
+        <input id="lati" type="text" name="lat" value="50.0"/>
+        <input id="long" type="text" name="lon" value="20.0"/><BR>
+        Category:
+        <input list="categories" name="category" autocomplete="off" required="required">
+        <datalist id="categories">
+                {% for category in categories %}
+                    <option value="{{ category.categoryName }}">
+                {% endfor %}
+        </datalist>
 
 
-    <input type="submit" value="Submit" class="btn btn-primary">
-    </input><BR>
+        <input type="submit" value="Submit" class="btn btn-primary"></input>
 
-</form>
-    <br>
+    </form>
 
 </div>
 <div id="map"></div>
